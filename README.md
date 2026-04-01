@@ -2,7 +2,7 @@
 
 A minimal, dependency-light neural network built **entirely with NumPy** that classifies handwritten digits (0 vs 1) from the MNIST dataset. No PyTorch. No TensorFlow. Just math and code.
 
-![Training Loss Curve](Figure_1.png)
+![Training Loss Curve](assets/Figure_1.png)
 
 ---
 
