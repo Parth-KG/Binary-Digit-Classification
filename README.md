@@ -8,9 +8,9 @@ A minimal, dependency-light neural network built **entirely with NumPy** that cl
 
 ## 📌 Overview
 
-This project implements a **two-layer feedforward neural network** trained on a binary subset of MNIST (~14,000 images of digits 0 and 1). Every component — forward propagation, backpropagation, weight updates — is written from first principles to make the internals as transparent as possible.
+This project implements a **two-layer feedforward neural network** trained on a binary subset of MNIST (14,780 images of digits 0 and 1). Every component — forward propagation, backpropagation, weight updates — is written from first principles to make the internals as transparent as possible.
 
-The model achieves high test accuracy with a clean training loss curve, as shown above.
+On the held-out test set it gets **99.86–99.90%** (2,952–2,953 of 2,956 images), with the clean training loss curve shown above.
 
 ---
 
@@ -35,11 +35,15 @@ Output Layer      →   1 neuron     (Sigmoid activation → binary prediction)
 ## 📁 Project Structure
 
 ```
-├── data_loader.py      # Downloads & filters MNIST (digits 0 and 1 only)
-├── preprocessing.py    # Normalizes, reshapes, and splits the dataset
-├── model.py            # BinaryNN class: forward pass, loss, backprop
-├── train.py            # Training loop, evaluation, and loss plot
-└── Figure_1.png        # Training loss curve output
+├── src/
+│   ├── data_loader.py      # Downloads & filters MNIST (digits 0 and 1 only)
+│   ├── preprocessing.py    # Normalizes, reshapes, and splits the dataset
+│   ├── model.py            # BinaryNN class: forward pass, loss, backprop
+│   └── train.py            # Training loop, evaluation, and loss plot
+├── assets/
+│   └── Figure_1.png        # Training loss curve
+├── requirements.txt
+└── LICENSE
 ```
 
 ---
@@ -49,12 +53,13 @@ Output Layer      →   1 neuron     (Sigmoid activation → binary prediction)
 ### Prerequisites
 
 ```bash
-pip install numpy scikit-learn matplotlib
+pip install -r requirements.txt
 ```
 
 ### Run Training
 
 ```bash
+cd src
 python train.py
 ```
 
@@ -70,7 +75,7 @@ This will:
 ## ⚙️ How It Works
 
 ### 1. Data Loading (`data_loader.py`)
-Fetches MNIST from OpenML and filters it to only include samples labelled `0` or `1`, producing a dataset of ~14,000 images.
+Fetches MNIST from OpenML and filters it to only include samples labelled `0` or `1`, producing a dataset of 14,780 images.
 
 ### 2. Preprocessing (`preprocessing.py`)
 - **Normalization**: Pixel values scaled from `[0, 255]` → `[0, 1]`
@@ -101,6 +106,14 @@ A standard gradient descent loop over 2000 epochs. Loss is logged every 100 epoc
 
 The loss curve shows smooth, stable convergence — starting near `0.69` (random chance for a binary classifier) and dropping close to `0.02` by epoch 2000.
 
+| Metric | Value |
+|---|---|
+| Test accuracy | **99.86–99.90%** (2,952–2,953 of 2,956) |
+| Final training loss | 0.017 |
+| Train / test images | 11,824 / 2,956 |
+
+The weights are initialised without a fixed seed, so each run lands slightly differently; the range above is from three runs.
+
 ---
 
 ## 💡 Key Concepts Demonstrated
@@ -116,7 +129,7 @@ The loss curve shows smooth, stable convergence — starting near `0.69` (random
 ## 🗺️ Possible Extensions
 
 - [ ] Add momentum or Adam optimizer
-- [ ] Extend to multi-class classification (all 10 digits)
+- [x] Extend to multi-class classification (all 10 digits) — done in [MultiClass-Digit-Classification](https://github.com/Parth-KG/MultiClass-Digit-Classification)
 - [ ] Add dropout regularization
 - [ ] Visualize misclassified examples
 - [ ] Export and reload trained weights
